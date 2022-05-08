@@ -1,3 +1,5 @@
+#!/bin/sh
+
 cd ~/srv/image-uploader
 git checkout .
 git pull origin master
