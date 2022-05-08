@@ -1,8 +1,9 @@
 import { Group, Text, useMantineTheme, MantineTheme, Center, TextInput, Stack } from '@mantine/core';
-import { Upload, Photo, X, Icon as TablerIcon } from 'tabler-icons-react';
+import { Upload, Photo, X, Icon as TablerIcon, CircleCheck } from 'tabler-icons-react';
 import { Dropzone, DropzoneStatus, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import { useState } from 'react';
 import axios from 'axios';
+import { showNotification, updateNotification } from '@mantine/notifications';
 
 function getIconColor(status: DropzoneStatus, theme: MantineTheme) {
   return status.accepted
@@ -57,6 +58,14 @@ export function UploadPage() {
         <Dropzone
           onDrop={async (files) => {
             setIsLoading(true)
+            showNotification({
+              id: 'load-data',
+              loading: true,
+              title: 'Upload',
+              message: 'Deine Bilder werden hochgeladen',
+              autoClose: false,
+              disallowClose: true,
+            });
             console.log('accepted files', files)
             try {
               const formData = new FormData()
@@ -75,11 +84,19 @@ export function UploadPage() {
               console.error('error uploading files', error)
             } finally {
               setIsLoading(false)
+              updateNotification({
+                id: 'load-data',
+                color: 'teal',
+                title: 'Upload vollständig',
+                message: files.length + " Bild(er) wurden hochgeladen!",
+                icon: <CircleCheck />,
+                autoClose: 5000,
+              });
             }
 
           }}
           loading={isLoading}
-          onReject={(files) => setIsLoading(false)}
+          onReject={() => setIsLoading(false)}
           maxSize={20 * 1024 ** 2}
           accept={IMAGE_MIME_TYPE}
           radius={10}
