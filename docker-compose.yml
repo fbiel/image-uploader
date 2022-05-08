@@ -1,0 +1,44 @@
+version: "3"
+volumes:
+  db:
+  pictures:
+
+
+services:
+  image-uploader-ui:
+    container_name: image-uploader-ui
+    volumes:
+      - ".:/build"
+      - "/build/node_modules"
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    build:
+      context: ./ui
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "2"
+        max-size: "1m"
+  image-uploader-api:
+    container_name: image-uploader-api
+    build:
+      context: ./api
+    environment:
+      - APP_KEY=vfUL7RVOpBo7yV7Ht8LG-4fkjR6e2w60
+      - HOST=0.0.0.0
+      - PORT=3333
+      - DRIVE_DISK=local
+    volumes:
+      - ".:/app"
+      - "/app/node_modules"
+      - "pictures:/public"
+      - "db:/db"
+    ports:
+      - "3333:3333"
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "2"
+        max-size: "1m"

@@ -34,7 +34,7 @@ export default class AppProvider {
 
   public async boot() {
     // IoC container is ready
-    db = new loki('quickstart.db', {
+    db = new loki('db/quickstart.db', {
       autoload: true,
       autoloadCallback: databaseInitialize,
       autosave: true,
@@ -45,7 +45,7 @@ export default class AppProvider {
     const { nanoid } = await import('nanoid')
 
     Route.post('upload', async ({ request }) => {
-      const uploader = request.body()['uploader']
+      const uploader = request.body()['uploader'] ?? "Anonym"
       const uploadedAt = new Date()
       const images = request.files('images')
       for (let image of images) {
@@ -53,10 +53,20 @@ export default class AppProvider {
         p.uploadedAt = uploadedAt
         p.uploader = uploader
         p.id = nanoid(16)
+        p.filename = image.clientName
         await image.move(Application.publicPath(`images/${uploader}/${p.id}/`))
         db.getCollection('pictures').insert(p)
       }
     })
+
+    Route.get('random', ({ response }) => {
+      const collection = db.getCollection('pictures')
+      if (!collection.data || collection.data.length === 0) return response.notFound()
+      const rand = Math.floor(Math.random() * collection.data.length)
+      const picture = collection.data[rand] as Picture
+      return response.redirect(`http://${process.env.HOST}:${process.env.PORT}/images/${picture.uploader}/${picture.id}/${picture.filename}`)
+    })
+
   }
 
   public async ready() {

@@ -3,7 +3,6 @@ import { Tabs, Text, Title } from '@mantine/core';
 import { Photo, Upload } from 'tabler-icons-react';
 import { UploadPage } from './pages/UploadPage'
 import { GalleryPage } from './pages/GalleryPage'
-
 import './App.css';
 
 function App() {

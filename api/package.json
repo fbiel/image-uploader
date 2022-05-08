@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@adonisjs/core": "^5.7.5",
+    "@adonisjs/drive": "^2.1.1",
     "@adonisjs/repl": "^3.1.10",
     "@types/lokijs": "^1.5.7",
     "lokijs": "^1.5.12",
