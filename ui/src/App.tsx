@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="App">
       <Title order={3} align="center" m="md">Polterabend</Title>
-      <Text m="md" align="left">
+      <Text m="md" align="center">
         Ladet Bilder hoch, die ihr mit Sigrun und Jens teilen möchtet.<br />
         Vorsicht: Könnten auch heute Abend gezeigt werden 😉
       </Text>
