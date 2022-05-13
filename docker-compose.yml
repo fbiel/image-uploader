@@ -26,7 +26,7 @@ services:
       context: ./api
     environment:
       - APP_KEY=vfUL7RVOpBo7yV7Ht8LG-4fkjR6e2w60
-      - HOST=0.0.0.0
+      - HOST=upload.fritz.box
       - PORT=3333
       - DRIVE_DISK=local
     volumes:

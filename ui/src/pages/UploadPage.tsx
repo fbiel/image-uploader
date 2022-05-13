@@ -36,10 +36,10 @@ export const dropzoneChildren = (status: DropzoneStatus, theme: MantineTheme) =>
 
     <div>
       <Text size="lg" inline my="md">
-        Einfach per Drag &amp; Drop draufziehen.
+        Drück hier, dann öffnet sich deine Fotomediathek
       </Text>
       <Text size="sm" color="dimmed" inline mt={7}>
-        Oder klick hier, dann öffnet sich deine Foto-Mediathek
+        Drag&amp;Drop geht auch!
       </Text>
     </div>
   </Group>
@@ -88,7 +88,7 @@ export function UploadPage() {
                 id: 'load-data',
                 color: 'teal',
                 title: 'Upload vollständig',
-                message: files.length + " Bild(er) wurden hochgeladen!",
+                message: files.length === 1 ? "Dein Bild wurde hochgeladen!" : (files.length + " Bilder wurden hochgeladen!"),
                 icon: <CircleCheck />,
                 autoClose: 5000,
               });

@@ -1,3 +1,4 @@
 api/public/images/
 api/quickstart.db
 ui/.env
+api/db/quickstart.db

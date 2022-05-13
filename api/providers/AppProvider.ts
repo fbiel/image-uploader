@@ -44,7 +44,7 @@ export default class AppProvider {
     const { default: Route } = await import('@ioc:Adonis/Core/Route')
     const { nanoid } = await import('nanoid')
 
-    Route.post('upload', async ({ request }) => {
+    Route.post('upload', async ({ request, response }) => {
       const uploader = request.body()['uploader'] ?? "Anonym"
       const uploadedAt = new Date()
       const images = request.files('images')
@@ -54,9 +54,11 @@ export default class AppProvider {
         p.uploader = uploader
         p.id = nanoid(16)
         p.filename = image.clientName
+
         await image.move(Application.publicPath(`images/${uploader}/${p.id}/`))
         db.getCollection('pictures').insert(p)
       }
+      return response.ok('')
     })
 
     Route.get('random', ({ response }) => {
@@ -64,9 +66,13 @@ export default class AppProvider {
       if (!collection.data || collection.data.length === 0) return response.notFound()
       const rand = Math.floor(Math.random() * collection.data.length)
       const picture = collection.data[rand] as Picture
-      return response.redirect(`http://${process.env.HOST}:${process.env.PORT}/images/${picture.uploader}/${picture.id}/${picture.filename}`)
+      return response.ok(`http://${process.env.HOST}:${process.env.PORT}/images/${picture.uploader}/${picture.id}/${picture.filename}`)
     })
 
+    Route.delete('wipe', ({ response }) => {
+      db.removeCollection('pictures');
+      return response.ok('pictures gone')
+    })
   }
 
   public async ready() {

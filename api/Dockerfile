@@ -20,7 +20,7 @@ ENV NODE_ENV=production
 ENV ENV_SILENT=true
 # Listen to external network connections
 # Otherwise it would only listen in-container ones
-ENV HOST=0.0.0.0
+ENV HOST=upload.fritz.box
 # Set port to listen
 ENV PORT=3333
 # Set app key at start time
