@@ -71,10 +71,9 @@ export function UploadPage() {
               const formData = new FormData()
               formData.append('uploader', username)
               files.forEach(f => formData.append("images", f))
-              console.log('posting to server', `http://${process.env.REACT_APP_SERVER}:3333/upload`)
               axios({
                 method: "POST",
-                url: `http://${process.env.REACT_APP_SERVER}:3333/upload`,
+                url: `http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/upload`,
                 data: formData,
                 headers: {
                   "Content-Type": "multipart/form-data"

@@ -16,22 +16,20 @@ const useStyles = createStyles((theme) => ({
 
 export function GalleryPage() {
   const [src, setSrc] = useState<string | null>(null)
-  const [previous, setPrevious] = useState<string | null>(null)
   const { classes } = useStyles();
   const { ref, toggle, fullscreen } = useFullscreen();
 
   const interval = useInterval(() => {
-    axios.get(`http://${process.env.REACT_APP_SERVER}:3333/random`).then(res => {
+    axios.get(`http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/random`).then(res => {
       console.log('response', res)
-      setSrc((current) => { setPrevious(current); return res.data; })
+      setSrc(`http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/${res.data}`)
     }).catch((e) => console.error(e))
   }, 10000);
 
   useEffect(() => {
 
-    axios.get(`http://${process.env.REACT_APP_SERVER}:3333/random`).then(res => {
-      setSrc(res.data)
-      setPrevious(res.data)
+    axios.get(`http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/random`).then(res => {
+      setSrc(`http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/${res.data}`)
     }).catch((e) => console.error(e))
 
     interval.start();

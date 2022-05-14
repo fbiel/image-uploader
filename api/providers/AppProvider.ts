@@ -66,7 +66,7 @@ export default class AppProvider {
       if (!collection.data || collection.data.length === 0) return response.notFound()
       const rand = Math.floor(Math.random() * collection.data.length)
       const picture = collection.data[rand] as Picture
-      return response.ok(`http://${process.env.HOST}:${process.env.PORT}/images/${picture.uploader}/${picture.id}/${picture.filename}`)
+      return response.ok(`images/${picture.uploader}/${picture.id}/${picture.filename}`)
     })
 
     Route.delete('wipe', ({ response }) => {
